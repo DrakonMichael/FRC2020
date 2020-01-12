@@ -5,8 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-//Bruh box
-
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
