@@ -6,9 +6,18 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -18,8 +27,33 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 
-  private Command testCommand;
-  private RobotContainer rContainer.
+  // VARIABLE INSTANTIATION
+
+  private boolean eStop = false;
+  private int JoystickPort = 0;
+
+  // OBJECT INSTANTIATION
+
+  private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
+  private final Timer m_timer = new Timer();
+  private Joystick driverControlJoystick = new Joystick(JoystickPort);
+  Map<String, Integer> inputMap = new HashMap<String, Integer>();
+
+  NetworkTableEntry xOffsetData;
+
+  // HELPER FUNCTIONS
+
+  public Double RoundNumber(Double Num) { // Reduce number Num to 3 decimal places
+    DecimalFormat df = new DecimalFormat("#.###");
+    return Double.parseDouble(df.format(Num));
+  }
+
+  // ROBOT CODE
+
+  /**
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
+   */
 
   @Override
   public void robotInit() {
