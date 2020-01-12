@@ -116,10 +116,10 @@ public class Robot extends TimedRobot {
     Double leftMotorValue = 0.0;
     Double rightMotorValue = 0.0;
     Double minThreshhold = 0.00;
-    Double MotorSpeedCap = 0.10;
+    Double MotorSpeedCap = 0.20;
 
-    leftMotorValue = xOffset * MotorSpeedCap;
-    rightMotorValue = xOffset * MotorSpeedCap * -1;
+    leftMotorValue = xOffset * MotorSpeedCap * -1;
+    rightMotorValue = xOffset * MotorSpeedCap * 1;
 
     if (Math.abs(leftMotorValue) < minThreshhold) {
       leftMotorValue = 0.0;
@@ -129,7 +129,7 @@ public class Robot extends TimedRobot {
       rightMotorValue = 0.0;
     }
 
-    // setMotors(leftMotorValue, rightMotorValue);
+    setMotors(leftMotorValue, rightMotorValue);
 
     System.out.println(
         "\n\n------\nxOffset: " + xOffset + "\nleftMotors: " + leftMotorValue + "\nrightMotors: " + rightMotorValue);
