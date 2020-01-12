@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    Double xOffset = xOffsetData.getNumber(0.0).doubleValue() / 125.0;
+    Double xOffset = xOffsetData.getNumber(125.0).doubleValue() / 125.0;
     xOffset -= 1;
 
     Double leftMotorValue = 0.0;
