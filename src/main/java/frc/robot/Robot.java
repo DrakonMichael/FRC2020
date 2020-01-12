@@ -91,8 +91,8 @@ public class Robot extends TimedRobot {
 
     // Set up networktables
     NetworkTableInstance tableInstance = NetworkTableInstance.getDefault();
-    NetworkTable table = tableInstance.getTable("datatable");
-    xOffsetData = table.getEntry("X");
+    NetworkTable table = tableInstance.getTable("8029data");
+    xOffsetData = table.getEntry("x");
     System.out.println("\n---ROBOT INITIATED---\n\n Begin Log:\n\n\n");
   }
 
