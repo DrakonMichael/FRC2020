@@ -110,15 +110,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    Number xOffset = xOffsetData.getNumber(0.0);
+    Double xOffset = xOffsetData.getNumber(0.0).doubleValue() / 125.0;
+    xOffset -= 1;
 
     Double leftMotorValue = 0.0;
     Double rightMotorValue = 0.0;
-    Double minThreshhold = 0.5;
+    Double minThreshhold = 0.00;
     Double MotorSpeedCap = 0.10;
 
-    leftMotorValue = xOffset.doubleValue() * MotorSpeedCap;
-    rightMotorValue = xOffset.doubleValue() * MotorSpeedCap;
+    leftMotorValue = xOffset * MotorSpeedCap;
+    rightMotorValue = xOffset * MotorSpeedCap * -1;
 
     if (Math.abs(leftMotorValue) < minThreshhold) {
       leftMotorValue = 0.0;
@@ -129,6 +130,7 @@ public class Robot extends TimedRobot {
     }
 
     // setMotors(leftMotorValue, rightMotorValue);
+
     System.out.println(
         "\n\n------\nxOffset: " + xOffset + "\nleftMotors: " + leftMotorValue + "\nrightMotors: " + rightMotorValue);
   }
