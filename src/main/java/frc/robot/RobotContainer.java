@@ -22,9 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-    private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    private final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -48,8 +46,5 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
-    }
+
 }

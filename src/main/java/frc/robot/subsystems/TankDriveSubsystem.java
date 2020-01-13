@@ -5,8 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class TankDriveSubsystem extends Subsystem {
 
-    private int leftMotorID = 05;
-    private int rightMotorID = 07;
+    private int leftMotorID = 00;
+    private int rightMotorID = 00;
+
+    TankDriveSubsystem(Integer leftMotor, Integer rightMotor) {
+        leftMotorID = leftMotor;
+        rightMotorID = rightMotor;
+    }
 
     TalonSRX leftMotorMain = new TalonSRX(leftMotorID);
     TalonSRX rightMotorMain = new TalonSRX(rightMotorID);
