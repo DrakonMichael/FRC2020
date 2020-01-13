@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
     Double leftMotorValue = 0.0;
     Double rightMotorValue = 0.0;
     Double minThreshhold = 0.00;
-    Double MotorSpeedCap = 0.20;
+    Double MotorSpeedCap = 0.33;
 
     leftMotorValue = xOffset * MotorSpeedCap * -1;
     rightMotorValue = xOffset * MotorSpeedCap * 1;
