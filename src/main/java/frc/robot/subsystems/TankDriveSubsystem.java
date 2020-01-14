@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class TankDriveSubsystem extends Subsystem {
+public class TankDriveSubsystem extends SubsystemBase {
 
     private int leftMotorID = 00;
     private int rightMotorID = 00;

@@ -6,14 +6,14 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
+
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.TankDriveSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import static frc.robot.Constants.*;
 
@@ -26,8 +26,8 @@ import static frc.robot.Constants.*;
  */
 public class Robot extends TimedRobot {
 
-  private Subsystem tankDriveSubsystem;
-  private Command driveCommand;
+  private SubsystemBase tankDriveSubsystem;
+  private CommandBase driveCommand;
 
   private RobotContainer rContainer;
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
   }
 
   @Override

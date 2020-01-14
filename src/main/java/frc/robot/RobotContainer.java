@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.TankDriveSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.HashMap;
 import java.util.Map;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -33,7 +32,7 @@ public class RobotContainer {
 
     public static Joystick driverControlJoystick = new Joystick(0);
 
-    Map<String, Integer> joyMap = new HashMap<String, Integer>();
+    public Map<String, Integer> joyMap = new HashMap<String, Integer>();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -57,12 +56,12 @@ public class RobotContainer {
     }
 
     // get Subsystems
-    public static Subsystem getTankDriveSubsystem() {
+    public static SubsystemBase getTankDriveSubsystem() {
         return r_tankDriveSubsystem;
     }
 
     // get Commands
-    public static Command getDriveCommand() {
+    public static CommandBase getDriveCommand() {
         return driveCommand;
     }
 

@@ -9,12 +9,12 @@ package frc.robot.commands;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.TankDriveSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveCommand extends Command {
+public class DriveCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final TankDriveSubsystem m_subsystem;
 
@@ -30,7 +30,7 @@ public class DriveCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("Command initialized");
+        System.out.println("Drive initialized");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,12 +41,6 @@ public class DriveCommand extends Command {
         Double leftPower = speedCap * RobotContainer.driverControlJoystick.getRawAxis(1);
         Double rightPower = speedCap * RobotContainer.driverControlJoystick.getRawAxis(5);
         m_subsystem.setMotors(leftPower, rightPower);
-    }
-
-    // Called once the command ends or is interrupted.
-    @Override
-    protected void end() {
-        System.out.println("Drive command finished");
     }
 
     // Returns true when the command should end.
