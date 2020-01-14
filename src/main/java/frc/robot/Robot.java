@@ -6,11 +6,16 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.Command;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.TankDriveSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import static frc.robot.Constants.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,7 +26,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  */
 public class Robot extends TimedRobot {
 
-  private Command testCommand;
+  private Subsystem tankDriveSubsystem;
+  private Command driveCommand;
+
   private RobotContainer rContainer;
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
 
@@ -30,12 +37,17 @@ public class Robot extends TimedRobot {
     PDP.clearStickyFaults();
     System.out.println("Robot Initiated:");
     rContainer = new RobotContainer();
+    tankDriveSubsystem = RobotContainer.getTankDriveSubsystem();
+    driveCommand = RobotContainer.getDriveCommand();
+
+    // Set default command
+    tankDriveSubsystem.setDefaultCommand(driveCommand);
+
   }
 
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-
   }
 
   @Override

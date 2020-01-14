@@ -1,5 +1,7 @@
-import edu.wpi.first.wpilibj.command.Subsystem;
+package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -8,7 +10,7 @@ public class TankDriveSubsystem extends Subsystem {
     private int leftMotorID = 00;
     private int rightMotorID = 00;
 
-    TankDriveSubsystem(Integer leftMotor, Integer rightMotor) {
+    public TankDriveSubsystem(Integer leftMotor, Integer rightMotor) {
         leftMotorID = leftMotor;
         rightMotorID = rightMotor;
     }
@@ -17,11 +19,6 @@ public class TankDriveSubsystem extends Subsystem {
     TalonSRX rightMotorMain = new TalonSRX(rightMotorID);
     TalonSRX leftMotorSlave = new TalonSRX(leftMotorID + 1);
     TalonSRX rightMotorSlave = new TalonSRX(rightMotorID + 1);
-
-    @Override
-    protected void initDefaultCommand() {
-
-    }
 
     public void setMotors(Double leftSpeed, Double rightSpeed) {
         if (leftSpeed > 1.0) {

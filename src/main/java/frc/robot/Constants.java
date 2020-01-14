@@ -18,4 +18,5 @@ package frc.robot;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public int BruhBox = 30;
 }

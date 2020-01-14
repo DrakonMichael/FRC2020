@@ -9,9 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.TankDriveSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+import java.util.HashMap;
+import java.util.Map;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -22,12 +28,21 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
+    private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
+    private static final DriveCommand driveCommand = new DriveCommand(r_tankDriveSubsystem);
+
+    public static Joystick driverControlJoystick = new Joystick(0);
+
+    Map<String, Integer> joyMap = new HashMap<String, Integer>();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+        joyMap.put("leftX", 0);
+        joyMap.put("leftY", 1);
+        joyMap.put("rightX", 4);
+        joyMap.put("rightY", 5);
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -39,6 +54,16 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+    }
+
+    // get Subsystems
+    public static Subsystem getTankDriveSubsystem() {
+        return r_tankDriveSubsystem;
+    }
+
+    // get Commands
+    public static Command getDriveCommand() {
+        return driveCommand;
     }
 
     /**
