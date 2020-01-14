@@ -40,9 +40,13 @@ public class Robot extends TimedRobot {
     tankDriveSubsystem = RobotContainer.getTankDriveSubsystem();
     driveCommand = RobotContainer.getDriveCommand();
 
-    // Set default command
-    tankDriveSubsystem.setDefaultCommand(driveCommand);
+  }
 
+  @Override
+  public void teleopInit() {
+    if (driveCommand == null) {
+      driveCommand.schedule();
+    }
   }
 
   @Override
@@ -53,5 +57,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     System.out.println("\n\n\n\n\n\n\n\n\nRobot Disabled");
+    if (driveCommand != null) {
+      driveCommand.cancel();
+    }
   }
 }
