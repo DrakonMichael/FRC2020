@@ -181,10 +181,6 @@ public class Robot extends TimedRobot {
 
   }
 
-  /**
-   * This function is called periodically during test mode.
-   */
-
   @Override
   public void disabledInit() {
     System.out.println("Disabling all motors...");
