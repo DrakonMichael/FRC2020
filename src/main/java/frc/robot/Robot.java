@@ -9,6 +9,11 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.platform.DeviceType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -17,6 +22,10 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +52,9 @@ public class Robot extends TimedRobot {
   TalonSRX rightMotorMain = new TalonSRX(rightMotorID);
   TalonSRX leftMotorSlave = new TalonSRX(leftMotorID + 1);
   TalonSRX rightMotorSlave = new TalonSRX(rightMotorID + 1);
+
+  CANSparkMax testNEO = new CANSparkMax(0, MotorType.kBrushless);
+
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
   private final Timer m_timer = new Timer();
   private Joystick driverControlJoystick = new Joystick(JoystickPort);
@@ -160,29 +172,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    // Prototyping
+    Double speed = driverControlJoystick.getRawAxis(3);
+    speed = ((speed * -1) + 1) / 2;
+    SmartDashboard.putNumber("NEO Speed", speed * 100);
+    SmartDashboard.putNumber("NEO Motor Temperature", testNEO.getMotorTemperature());
+    testNEO.set(speed);
 
-    if (driverControlJoystick.getRawButtonPressed(2) == true) {
-      System.out
-          .println("\n\n\nWARNING - Emergency stop button pressed. Disable and Re-enable teleop to enable driving.");
-      eStop = true;
-    }
-
-    if (eStop == false) {
-      // Dual Joystick system --
-      Double leftJoystickValue = driverControlJoystick.getRawAxis(inputMap.get("leftY"));
-      Double rightJoystickValue = driverControlJoystick.getRawAxis(inputMap.get("rightY"));
-
-      setMotors(leftJoystickValue * -0.5, rightJoystickValue * -0.5);
-      // both motors to be the joystick
-
-      // Print some logs
-      System.out.println("\nleftMotor: " + RoundNumber(leftJoystickValue * -100) + "%  ("
-          + leftMotorMain.getTemperature() + ")" + "\nrightMotor: " + RoundNumber(rightJoystickValue * -100) + "%  ("
-          + leftMotorMain.getTemperature() + ")");
-
-    } else {
-      setMotors(0.0, 0.0);
-    }
   }
 
   /**
