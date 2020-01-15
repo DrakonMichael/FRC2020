@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.TankDriveSubsystem;
+import frc.robot.commands.VisionCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,6 +30,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
     private static final DriveCommand driveCommand = new DriveCommand(r_tankDriveSubsystem);
+    private static final VisionCommand autonomousCommand = new VisionCommand(r_tankDriveSubsystem);
 
     public static Joystick driverControlJoystick = new Joystick(0);
 
@@ -63,6 +65,10 @@ public class RobotContainer {
     // get Commands
     public static CommandBase getDriveCommand() {
         return driveCommand;
+    }
+
+    public static CommandBase getAutonomousCommand() {
+        return autonomousCommand;
     }
 
     /**

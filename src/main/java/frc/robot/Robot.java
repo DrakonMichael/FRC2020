@@ -6,15 +6,12 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
-import frc.robot.commands.DriveCommand;
-import frc.robot.subsystems.TankDriveSubsystem;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import static frc.robot.Constants.*;
 
 /**
@@ -26,8 +23,8 @@ import static frc.robot.Constants.*;
  */
 public class Robot extends TimedRobot {
 
-  private SubsystemBase tankDriveSubsystem;
   private CommandBase driveCommand;
+  private CommandBase autonomousCommand;
 
   private RobotContainer rContainer;
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
@@ -37,15 +34,29 @@ public class Robot extends TimedRobot {
     PDP.clearStickyFaults();
     System.out.println("Robot Initiated:");
     rContainer = new RobotContainer();
-    tankDriveSubsystem = RobotContainer.getTankDriveSubsystem();
     driveCommand = RobotContainer.getDriveCommand();
-
+    autonomousCommand = RobotContainer.getAutonomousCommand();
   }
 
   @Override
   public void teleopInit() {
     if (driveCommand == null) {
       driveCommand.schedule();
+    }
+
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
+  }
+
+  @Override
+  public void autonomousInit() {
+    if (autonomousCommand == null) {
+      autonomousCommand.schedule();
+    }
+
+    if (driveCommand != null) {
+      driveCommand.cancel();
     }
   }
 
@@ -56,9 +67,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    System.out.println("\n\n\n\n\n\n\n\n\nRobot Disabled");
     if (driveCommand != null) {
       driveCommand.cancel();
     }
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
+    System.out.println("\n\n\n\n\n\n\n\n\nRobot Disabled");
   }
 }
