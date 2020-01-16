@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
 
   private CommandBase driveCommand;
   private CommandBase autonomousCommand;
+  private CommandBase prototypeCommand;
 
   private RobotContainer rContainer;
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
@@ -36,12 +37,17 @@ public class Robot extends TimedRobot {
     rContainer = new RobotContainer();
     driveCommand = RobotContainer.getDriveCommand();
     autonomousCommand = RobotContainer.getAutonomousCommand();
+    prototypeCommand = RobotContainer.getPrototypeCommand();
   }
 
   @Override
   public void teleopInit() {
     if (driveCommand == null) {
       driveCommand.schedule();
+    }
+
+    if (prototypeCommand == null) {
+      prototypeCommand.schedule();
     }
 
     if (autonomousCommand != null) {
@@ -57,6 +63,10 @@ public class Robot extends TimedRobot {
 
     if (driveCommand != null) {
       driveCommand.cancel();
+    }
+
+    if (prototypeCommand != null) {
+      prototypeCommand.cancel();
     }
   }
 

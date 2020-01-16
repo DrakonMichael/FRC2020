@@ -7,17 +7,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveCommand;
-import frc.robot.subsystems.TankDriveSubsystem;
-import frc.robot.commands.VisionCommand;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.VisionCommand;
+import frc.robot.commands.prototypingCommand;
+import frc.robot.subsystems.PrototypingSubsystem;
+import frc.robot.subsystems.TankDriveSubsystem;
 import java.util.HashMap;
 import java.util.Map;
-import edu.wpi.first.wpilibj.Joystick;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -27,10 +27,14 @@ import edu.wpi.first.wpilibj.Joystick;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
+    // The robot's subsystems
     private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
+    private static final PrototypingSubsystem r_prototypingSubsystem = new PrototypingSubsystem(0);
+
+    // The robot's commands
     private static final DriveCommand driveCommand = new DriveCommand(r_tankDriveSubsystem);
     private static final VisionCommand autonomousCommand = new VisionCommand(r_tankDriveSubsystem);
+    private static final prototypingCommand prototypeCommand = new prototypingCommand(r_prototypingSubsystem);
 
     public static Joystick driverControlJoystick = new Joystick(0);
 
@@ -62,6 +66,10 @@ public class RobotContainer {
         return r_tankDriveSubsystem;
     }
 
+    public static SubsystemBase getPrototypingSubsystem() {
+        return r_prototypingSubsystem;
+    }
+
     // get Commands
     public static CommandBase getDriveCommand() {
         return driveCommand;
@@ -69,6 +77,10 @@ public class RobotContainer {
 
     public static CommandBase getAutonomousCommand() {
         return autonomousCommand;
+    }
+
+    public static CommandBase getPrototypeCommand() {
+        return prototypeCommand;
     }
 
     /**
