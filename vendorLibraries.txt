@@ -1,0 +1,2 @@
+CTRE (Talon SRX) - http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+REV robotics (Spark MAX) - http://www.revrobotics.com/content/sw/max/sdk/REVRobotics.json
