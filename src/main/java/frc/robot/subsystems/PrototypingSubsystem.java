@@ -24,8 +24,8 @@ public class PrototypingSubsystem extends SubsystemBase {
         return prototypeMotor.getBusVoltage();
     }
 
-    public Double getMotorSpeed() {
-        return motorSpeed;
+    public Double getMotorControllerTemperature() {
+        return prototypeMotor.getTemperature();
     }
 
 }

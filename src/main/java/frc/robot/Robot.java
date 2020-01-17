@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import static frc.robot.Constants.*;
@@ -27,6 +30,8 @@ public class Robot extends TimedRobot {
   private CommandBase autonomousCommand;
   private CommandBase prototypeCommand;
 
+  private NetworkTableEntry robotEnabled = Shuffleboard.getTab("Prototyping").add("Robot Enabled", false).getEntry();
+
   private RobotContainer rContainer;
   private PowerDistributionPanel PDP = new PowerDistributionPanel(00);
 
@@ -35,6 +40,7 @@ public class Robot extends TimedRobot {
     PDP.clearStickyFaults();
     System.out.println("Robot Initiated:");
     rContainer = new RobotContainer();
+    robotEnabled.setBoolean(true);
     driveCommand = rContainer.getDriveCommand();
     autonomousCommand = rContainer.getAutonomousCommand();
     prototypeCommand = rContainer.getPrototypeCommand();
@@ -78,6 +84,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+
+    robotEnabled.setBoolean(false);
+
     if (driveCommand != null) {
       driveCommand.cancel();
     }
