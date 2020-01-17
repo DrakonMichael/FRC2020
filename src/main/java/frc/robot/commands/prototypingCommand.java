@@ -7,12 +7,13 @@
 
 package frc.robot.commands;
 
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.PrototypingSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.PrototypingSubsystem;
 
 /**
  * An example command that uses an example subsystem.
@@ -21,6 +22,8 @@ public class prototypingCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final PrototypingSubsystem m_subsystem;
     private NetworkTableEntry speedIndicator = Shuffleboard.getTab("Prototyping").add("Prototype motor speed", 0.0)
+            .getEntry();
+    private NetworkTableEntry voltageIndicator = Shuffleboard.getTab("Prototyping").add("Motor Voltage", 0.0)
             .getEntry();
 
     /**
@@ -43,9 +46,10 @@ public class prototypingCommand extends CommandBase {
     @Override
     public void execute() {
         Double speedCap = 1.0;
-        Double speed = speedCap * RobotContainer.driverControlJoystick.getRawAxis(3);
-        speedIndicator.setDouble(speed);
-
+        Double speed = -speedCap * RobotContainer.driverControlJoystick.getRawAxis(3);
+        speed = (speed + 1) / 2.0;
+        speedIndicator.setDouble(speed * 100);
+        voltageIndicator.setDouble(m_subsystem.getMotorVoltage());
         m_subsystem.setMotorSpeed(speed);
     }
 

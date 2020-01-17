@@ -18,7 +18,6 @@ import frc.robot.subsystems.TankDriveSubsystem;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -28,8 +27,8 @@ import java.util.Map;
  */
 public class RobotContainer {
     // The robot's subsystems
-    private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(5, 7);
-    private static final PrototypingSubsystem r_prototypingSubsystem = new PrototypingSubsystem(0);
+    private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(10, 12);
+    private static final PrototypingSubsystem r_prototypingSubsystem = new PrototypingSubsystem(7);
 
     // The robot's commands
     private static final DriveCommand driveCommand = new DriveCommand(r_tankDriveSubsystem);
@@ -81,6 +80,12 @@ public class RobotContainer {
 
     public static CommandBase getPrototypeCommand() {
         return prototypeCommand;
+    }
+
+    // Periodic method - use to queue joystick button presses.
+
+    public static void periodic() {
+
     }
 
     /**
