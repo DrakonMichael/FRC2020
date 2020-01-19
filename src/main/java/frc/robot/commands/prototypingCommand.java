@@ -14,20 +14,18 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.PrototypingSubsystem;
 
-
-
 /**
  * An example command that uses an example subsystem.
  */
 public class prototypingCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final PrototypingSubsystem m_subsystem;
-    private NetworkTableEntry speedIndicator = Shuffleboard.getTab("Prototyping").add("Prototype motor speed", 0.0)
+    private NetworkTableEntry speedIndicator = Shuffleboard.getTab("Prototyping").add("Input", 0.0).getEntry();
+    private NetworkTableEntry voltageIndicator = Shuffleboard.getTab("Prototyping").add("Prototype motor Voltage", 0.0)
             .getEntry();
-    private NetworkTableEntry voltageIndicator = Shuffleboard.getTab("Prototyping").add("Motor Voltage", 0.0)
+    private NetworkTableEntry tempIndicator = Shuffleboard.getTab("Prototyping").add("Prototype motor Temperature", 0.0)
             .getEntry();
-    private NetworkTableEntry temperatureIndicator = Shuffleboard.getTab("Prototyping").add("Motor Controller Temp", 0.0)
-            .getEntry();
+    private NetworkTableEntry encoderVelocity = Shuffleboard.getTab("Prototyping").add("Motor speed", 0.0).getEntry();
 
     /**
      * Creates a new ExampleCommand.
@@ -52,8 +50,9 @@ public class prototypingCommand extends CommandBase {
         Double speed = -speedCap * RobotContainer.driverControlJoystick.getRawAxis(3);
         speed = (speed + 1) / 2.0;
         speedIndicator.setDouble(speed * 100);
-        temperatureIndicator.setDouble(m_subsystem.getMotorControllerTemperature());
         voltageIndicator.setDouble(m_subsystem.getMotorVoltage());
+        tempIndicator.setDouble(m_subsystem.getMotorTemp());
+        encoderVelocity.setDouble(m_subsystem.getvelocity());
         m_subsystem.setMotorSpeed(speed);
     }
 

@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     PDP.clearStickyFaults();
     System.out.println("Robot Initiated:");
     rContainer = new RobotContainer();
-    robotEnabled.setBoolean(true);
+
     driveCommand = rContainer.getDriveCommand();
     autonomousCommand = rContainer.getAutonomousCommand();
     prototypeCommand = rContainer.getPrototypeCommand();
@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    robotEnabled.setBoolean(true);
     if (driveCommand == null) {
       // driveCommand.schedule();
     }
