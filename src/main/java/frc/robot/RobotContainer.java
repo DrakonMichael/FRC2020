@@ -28,7 +28,7 @@ import java.util.Map;
 public class RobotContainer {
     // The robot's subsystems
     private static final TankDriveSubsystem r_tankDriveSubsystem = new TankDriveSubsystem(10, 12);
-    private static final PrototypingSubsystem r_prototypingSubsystem = new PrototypingSubsystem(21);
+    private static final PrototypingSubsystem r_prototypingSubsystem = new PrototypingSubsystem(21, 1);
 
     // The robot's commands
     private static final DriveCommand driveCommand = new DriveCommand(r_tankDriveSubsystem);
