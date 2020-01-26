@@ -10,8 +10,12 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import frc.robot.commands.prototypingCommand;
+import frc.robot.RobotContainer;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.cameraserver.CameraServer;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -26,9 +30,9 @@ import static frc.robot.Constants.*;
  */
 public class Robot extends TimedRobot {
 
-  private CommandBase driveCommand;
   private CommandBase autonomousCommand;
   private CommandBase prototypeCommand;
+  private CommandBase driveCommand;
 
   private NetworkTableEntry robotEnabled = Shuffleboard.getTab("Prototyping").add("Robot Enabled", false).getEntry();
 
@@ -41,20 +45,21 @@ public class Robot extends TimedRobot {
     System.out.println("Robot Initiated:");
     rContainer = new RobotContainer();
 
-    driveCommand = rContainer.getDriveCommand();
     autonomousCommand = rContainer.getAutonomousCommand();
     prototypeCommand = rContainer.getPrototypeCommand();
+    driveCommand = rContainer.getDriveCommand();
   }
 
   @Override
   public void teleopInit() {
     robotEnabled.setBoolean(true);
-    if (driveCommand == null) {
-      // driveCommand.schedule();
-    }
 
     if (prototypeCommand != null) {
-      prototypeCommand.schedule();
+      // prototypeCommand.schedule();
+    }
+
+    if (driveCommand != null) {
+      driveCommand.schedule();
     }
 
     if (autonomousCommand != null) {
@@ -66,10 +71,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     if (autonomousCommand == null) {
       autonomousCommand.schedule();
-    }
-
-    if (driveCommand != null) {
-      driveCommand.cancel();
     }
 
     if (prototypeCommand != null) {
@@ -88,15 +89,17 @@ public class Robot extends TimedRobot {
 
     robotEnabled.setBoolean(false);
 
-    if (driveCommand != null) {
-      driveCommand.cancel();
-    }
     if (prototypeCommand != null) {
       prototypeCommand.cancel();
     }
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+
+    if (driveCommand != null) {
+      driveCommand.cancel();
+    }
+
     System.out.println("\n\n\n\n\n\n\n\n\nRobot Disabled");
   }
 }

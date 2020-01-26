@@ -2,37 +2,64 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.I2C;
+import java.util.Map;
+
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class PrototypingSubsystem extends SubsystemBase {
 
-    private int prototypeMotorID = 0;
-    private CANSparkMax prototypeMotor;
-    private CANEncoder encoder;
+    private NetworkTableEntry ProportionalData = Shuffleboard.getTab("Prototyping").add("Proportinonal", 0.0)
+            .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 0.1)).getEntry();
+    private NetworkTableEntry IntegralData = Shuffleboard.getTab("Prototyping").add("Integral", 0.0)
+            .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 0.1)).getEntry();
+    private NetworkTableEntry DerivativeData = Shuffleboard.getTab("Prototyping").add("Derivative", 0.0)
+            .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 0.1)).getEntry();
 
-    private I2C.Port i2cport = I2C.Port.kOnboard;
-    private ColorSensorV3 colorsensor = new ColorSensorV3(i2cport);
+    private int prototypeMotorID = 21;
+    private TalonFX prototypeMotor;
+    private TalonFXSensorCollection sensorCollection;
+
+    private Double proportional = 0.0;
+    private Double derivative = 0.0;
+    private Double integral = 0.0;
+    private Double maxMotorSpeed = 6500.0;
+
+    private PIDController pidLoop = new PIDController(proportional, integral, derivative);
+
+    @Override
+    public void periodic() {
+        proportional = ProportionalData.getDouble(0.0);
+        integral = IntegralData.getDouble(0.0);
+        derivative = DerivativeData.getDouble(0.0);
+
+        pidLoop.setPID(proportional, integral, derivative);
+
+    }
 
     public PrototypingSubsystem(Integer prototypeMotorid, Integer analogOutputPin) {
         prototypeMotorID = prototypeMotorid;
-        prototypeMotor = new CANSparkMax(21, MotorType.kBrushless);
-        encoder = new CANEncoder(prototypeMotor);
+        prototypeMotor = new TalonFX(prototypeMotorid);
+        sensorCollection = new TalonFXSensorCollection(prototypeMotor);
 
-        System.out.println(prototypeMotor.clearFaults());
+        System.out.println(prototypeMotor.clearStickyFaults());
     }
 
     public void setMotorSpeed(Double speed) {
-
-        prototypeMotor.set(speed);
-    }
-
-    public Color getcolor() {
-        return colorsensor.getColor();
+        prototypeMotor.set(ControlMode.PercentOutput, pidLoop.calculate(getvelocity() / maxMotorSpeed, speed));
+        System.out.println(pidLoop.calculate(getvelocity() / maxMotorSpeed, speed));
     }
 
     public Double getMotorVoltage() {
@@ -40,11 +67,11 @@ public class PrototypingSubsystem extends SubsystemBase {
     }
 
     public Double getMotorTemp() {
-        return prototypeMotor.getMotorTemperature();
+        return prototypeMotor.getTemperature();
     }
 
     public Double getvelocity() {
-        return encoder.getVelocity();
+        return (sensorCollection.getIntegratedSensorVelocity() / 2048) * 600;
     }
 
 }

@@ -43,6 +43,8 @@ public class DriveCommand extends CommandBase {
         Double leftPower = speedCap * RobotContainer.driverControlJoystick.getRawAxis(1);
         Double rightPower = speedCap * RobotContainer.driverControlJoystick.getRawAxis(5);
         m_subsystem.setMotors(leftPower, rightPower);
+
+        m_subsystem.setIntake(RobotContainer.driverControlJoystick.getRawAxis(3));
     }
 
     @Override

@@ -15,10 +15,9 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.PrototypingSubsystem;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-/**
- * An example command that uses an example subsystem.
- */
 public class prototypingCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final PrototypingSubsystem m_subsystem;
@@ -28,14 +27,7 @@ public class prototypingCommand extends CommandBase {
     private NetworkTableEntry tempIndicator = Shuffleboard.getTab("Prototyping").add("Prototype motor Temperature", 0.0)
             .getEntry();
     private NetworkTableEntry encoderVelocity = Shuffleboard.getTab("Prototyping").add("Motor speed", 0.0).getEntry();
-    private NetworkTableEntry colorSensor = Shuffleboard.getTab("Prototyping").add("Color Sensor", "NoColor")
-            .getEntry();
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
     public prototypingCommand(PrototypingSubsystem subsystem) {
         m_subsystem = subsystem;
     }
@@ -50,20 +42,15 @@ public class prototypingCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        /*
-         * Double speedCap = 1.0; Double speed = -speedCap *
-         * RobotContainer.driverControlJoystick.getRawAxis(3); speed = (speed + 1) /
-         * 2.0; speedIndicator.setDouble(speed * 100);
-         * voltageIndicator.setDouble(m_subsystem.getMotorVoltage());
-         * tempIndicator.setDouble(m_subsystem.getMotorTemp());
-         * encoderVelocity.setDouble(m_subsystem.getvelocity());
-         * m_subsystem.setMotorSpeed(speed);
-         */
 
-        Color myColor = m_subsystem.getcolor();
-        SmartDashboard.putNumber("Red", myColor.red);
-        SmartDashboard.putNumber("Green", myColor.green);
-        SmartDashboard.putNumber("Blue", myColor.blue);
+        Double speedCap = 1.0;
+        Double speed = -speedCap * RobotContainer.driverControlJoystick.getRawAxis(3);
+        speed = (speed + 1) / 2.0;
+        speedIndicator.setDouble(speed * 6500.0);
+        voltageIndicator.setDouble(m_subsystem.getMotorVoltage());
+        tempIndicator.setDouble(m_subsystem.getMotorTemp());
+        encoderVelocity.setDouble(m_subsystem.getvelocity());
+        m_subsystem.setMotorSpeed(speed);
 
     }
 
